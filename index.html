@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>إدارة المحل</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div id="storeName">ELGML</div>
+  <div id="storeSub">للتجارة والتوزيع</div>
+</header>
+
+<nav>
+  <button id="tabView" class="active">عرض</button>
+  <button id="tabSell">بيع</button>
+  <button id="tabCustomers">العملاء</button>
+</nav>
+
+<main>
+  <!-- صفحة العرض -->
+  <section id="viewPage">
+    <div class="card">
+      <input id="search" placeholder="🔍 بحث عن منتج...">
+    </div>
+    <div class="card">
+      <div class="row">
+        <input id="pName" placeholder="اسم المنتج" style="flex:2">
+        <input id="pPrice" type="number" min="0" step="any" placeholder="السعر">
+        <button class="btn green" id="saveProduct">إضافة</button>
+        <button class="btn gray hidden" id="cancelEdit">إلغاء</button>
+      </div>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>اسم المنتج</th><th>السعر</th><th></th></tr></thead>
+        <tbody id="productsBody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <button class="btn green" id="backupBtn">💾 نسخ احتياطي</button>
+      <button class="btn gray" id="restoreBtn">📂 استرجاع نسخة</button>
+      <input type="file" id="restoreFile" accept=".json,application/json" class="hidden">
+    </div>
+  </section>
+
+  <!-- صفحة البيع -->
+  <section id="sellPage" class="hidden">
+    <div class="card">
+      <input id="customer" placeholder="اسم العميل (اختياري)">
+    </div>
+    <div class="card">
+      <div class="row">
+        <input id="sName" list="productsList" placeholder="اسم المنتج" style="flex:2">
+        <datalist id="productsList"></datalist>
+        <input id="sPrice" type="number" min="0" step="any" placeholder="السعر">
+        <input id="sQty" type="number" min="1" step="any" value="1" placeholder="الكمية">
+        <button class="btn green" id="addLine">إضافة للفاتورة</button>
+      </div>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>المنتج</th><th>السعر</th><th>الكمية</th><th>الإجمالي</th><th></th></tr></thead>
+        <tbody id="linesBody"></tbody>
+      </table>
+      <div class="total">الإجمالي: <span id="grand">0</span></div>
+      <button class="btn" id="makeInvoice">إصدار الفاتورة</button>
+      <button class="btn gray" id="clearLines">مسح</button>
+    </div>
+  </section>
+
+  <!-- صفحة العملاء -->
+  <section id="customersPage" class="hidden">
+    <div class="card">
+      <input id="cSearch" placeholder="🔍 بحث باسم العميل أو الصنف...">
+    </div>
+    <div class="card">
+      <div class="row">
+        <input id="cName" placeholder="اسم العميل" style="flex:2">
+        <input id="cItem" placeholder="الصنف" style="flex:2">
+        <input id="cPrice" type="number" min="0" step="any" placeholder="السعر">
+      </div>
+      <div class="row">
+        <label class="chk"><input type="checkbox" id="cPaid"> تم السداد</label>
+        <label class="chk"><input type="checkbox" id="cUnpaid" checked> لم يتم السداد</label>
+        <button class="btn green" id="addCustomer">إضافة</button>
+      </div>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>العميل</th><th>الصنف</th><th>السعر</th><th>الحالة</th><th></th></tr></thead>
+        <tbody id="customersBody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<div id="modal" class="modal hidden">
+  <div class="invoice">
+    <h2 id="invStore"></h2>
+    <div class="invsub" id="invSub"></div>
+    <div class="meta"><span>فاتورة رقم: <b id="invNo"></b></span><span id="invDate"></span></div>
+    <div class="meta"><span>العميل: <b id="invCustomer"></b></span></div>
+    <table>
+      <thead><tr><th>المنتج</th><th>السعر</th><th>الكمية</th><th>الإجمالي</th></tr></thead>
+      <tbody id="invBody"></tbody>
+    </table>
+    <div class="total">الإجمالي: <span id="invTotal"></span></div>
+    <div class="noprint">
+      <button class="btn" onclick="window.print()">🖨️ طباعة</button>
+      <button class="btn gray" id="closeInv">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
